@@ -1,0 +1,45 @@
+{
+  "name": "roblox-animation-transfer",
+  "version": "1.0.0",
+  "description": "Transfers Roblox animations from one owner to another",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "roblox-animation-transfer": "dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evaera/roblox-animation-transfer.git"
+  },
+  "keywords": [
+    "roblox",
+    "animation",
+    "transfer"
+  ],
+  "author": "evaera",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/evaera/roblox-animation-transfer/issues"
+  },
+  "homepage": "https://github.com/evaera/roblox-animation-transfer#readme",
+  "devDependencies": {
+    "@types/better-queue": "^3.8.0",
+    "@types/cheerio": "^0.22.10",
+    "@types/node": "^10.12.19",
+    "@types/split2": "^2.1.6",
+    "@types/yargs": "^12.0.8",
+    "tslint": "^5.12.1",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.2.4"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "better-queue": "^3.8.10",
+    "chalk": "^2.4.2",
+    "cheerio": "^1.0.0-rc.2",
+    "split2": "^3.1.0",
+    "yargs": "^12.0.5"
+  }
+}
