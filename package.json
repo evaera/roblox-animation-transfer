@@ -1,6 +1,6 @@
 {
   "name": "roblox-animation-transfer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Transfers Roblox animations from one owner to another",
   "main": "dist/index.js",
   "scripts": {
