@@ -29,7 +29,12 @@ async function main () {
     fatal(`Specified input file ${argv.inFile} does not exist.`)
   }
 
-  const state = await getState(argv.cookie)
+  let cookie = process.env.ROBLOSECURITY
+
+  if (argv.cookie) cookie = argv.cookie
+  if (!cookie) fatal('Either set the ROBLOSECURITY environment variable or provide the --cookie option.')
+
+  const state = await getState(cookie!)
 
   const inStream = argv.inFile ? fs.createReadStream(argv.inFile) : process.stdin
   const outStream = argv.outFile ? fs.createWriteStream(argv.outFile) : process.stdout

@@ -10,6 +10,8 @@ This tool was born out of necessity because unlike other asset types on Roblox, 
 ### .ROBLOSECURITY
 In order to upload animations, the `.ROBLOSECURITY` login cookie from Roblox.com is required. The account that the cookie belongs to must have permission to upload animations on the destination group. It is recommended that you use an alternate account for this process.
 
+You can either set an environment variable named `ROBLOSECURITY` to the value of your cookie, or you can provide the `--cookie`/`-c` option every time you run the command.
+
 ### Animation List Files
 This tool operates on text files that contain lists of animations. This tool has the ability to generate these files from an owner, in addition to reading them.
 
@@ -41,10 +43,9 @@ You can specify an `--outFile` here as well to write the new list to a file inst
 
 ### All together now
 
-Because roblox-animation-transfer can operate purely on stdin and stdout, transferring **all** animations between groups is as simple as just one command (well, two if you count setting an environment variable):
+Because roblox-animation-transfer can operate purely on stdin and stdout, transferring **all** animations between groups is as simple as just one command (assumes you've set the `ROBLOSECURITY` env variable):
 
-- `$ export ROBLO=[YOUR .ROBLOSECURITY COOKIE HERE]`
-- `$ npx roblox-animation-transfer -g 12345 -l -c $ROBLO | npx roblox-animation-transfer -g 67890 -c $ROBLO`
+- `$ npx roblox-animation-transfer -g 12345 -l | npx roblox-animation-transfer -g 67890`
 
 In the above example, all animations from group id `12345` will be transferred to group id `67890`.
 

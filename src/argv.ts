@@ -47,7 +47,6 @@ const argv = yargs
   .option('cookie', {
     alias: 'c',
     desc: 'The .ROBLOSECURITY cookie to use for logging in.',
-    demandOption: true,
     string: true
   })
 
