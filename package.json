@@ -27,13 +27,13 @@
   "devDependencies": {
     "@types/better-queue": "^3.8.0",
     "@types/cheerio": "^0.22.10",
-    "@types/node": "^10.12.19",
+    "@types/node": "^10.17.28",
     "@types/node-fetch": "^2.1.4",
     "@types/split2": "^2.1.6",
     "@types/yargs": "^12.0.8",
     "tslint": "^5.12.1",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.2.4"
+    "typescript": "^3.9.7"
   },
   "dependencies": {
     "axios": "^0.18.0",
