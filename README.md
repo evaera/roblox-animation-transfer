@@ -53,9 +53,9 @@ You can specify an `--outFile` here as well to write the new list to a file inst
 
 Because roblox-animation-transfer can operate purely on stdin and stdout, transferring **all** animations between groups is as simple as just one command (assumes you've set the `ROBLOSECURITY` env variable):
 
-- `$ npx roblox-animation-transfer -g 12345 -l | npx roblox-animation-transfer -g 67890`
+- `$ npx roblox-animation-transfer -g 12345 -l | npx roblox-animation-transfer -g 67869`
 
-In the above example, all animations from group id `12345` will be transferred to group id `67890`.
+In the above example, all animations from group id `12345` will be transferred to group id `67869`.
 
 ## Command options
 ```
