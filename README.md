@@ -17,10 +17,13 @@ By default, the tool will use the cookie from Roblox Studio on Windows. You do n
 You can either set an environment variable named `ROBLOSECURITY` to the value of your cookie, or you can provide the `--cookie`/`-c` option every time you run the command.
 
 In bash, that looks like this:
-`$ export ROBLOSECURITY=[YOUR  COOKIE HERE]`
+`export ROBLOSECURITY=YOUR  COOKIE HERE`
 
 And in PowerShell:
-`$ $env:ROBLOSECURITY="[YOUR COOKIE HERE]"`
+`$env:ROBLOSECURITY="YOUR COOKIE HERE"`
+
+And in Command Prompt:
+`set "ROBLOSECURITY=YOUR COOKIE HERE"`
 
 **The examples below assume you've set the environment variable or are logged into Studio on Windows!**
 
