@@ -10,6 +10,10 @@ This tool was born out of necessity because unlike other asset types on Roblox, 
 ### .ROBLOSECURITY
 In order to upload animations, the `.ROBLOSECURITY` login cookie from Roblox.com is required. The account that the cookie belongs to must have permission to upload animations on the destination group. It is recommended that you use an alternate account for this process.
 
+By default, the tool will use the cookie from Roblox Studio on Windows. You do not need to manually specify the cookie if this works for you.
+
+#### Manually specifying the cookie
+
 You can either set an environment variable named `ROBLOSECURITY` to the value of your cookie, or you can provide the `--cookie`/`-c` option every time you run the command.
 
 In bash, that looks like this:
@@ -18,7 +22,7 @@ In bash, that looks like this:
 And in PowerShell:
 `$ $env:ROBLOSECURITY="[YOUR COOKIE HERE]"`
 
-**The examples below assume you've set the environment variable!**
+**The examples below assume you've set the environment variable or are logged into Studio on Windows!**
 
 ### Animation List Files
 This tool reads in text files that contain a list of animations to upload. In addition to creating them manually, the tool can generate them from a user or a group.
