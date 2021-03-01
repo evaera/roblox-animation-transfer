@@ -34,7 +34,7 @@ export default async function getState(rawCookie: string): Promise<State> {
   const csrfToken = extract(
     String,
     req.data,
-    /<meta name=csrf-token data-token=(.+)>/,
+    /<meta name=csrf-token data-token=(.+?)>/,
     "Unable to extract CSRF token"
   )
 
