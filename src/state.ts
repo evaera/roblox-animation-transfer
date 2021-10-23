@@ -1,6 +1,5 @@
-import axios from "axios"
+import fetch from "node-fetch"
 import * as endpoints from "./endpoints"
-import { extract } from "./util"
 
 export interface State {
   headers: {
@@ -13,30 +12,30 @@ export interface State {
 export default async function getState(rawCookie: string): Promise<State> {
   const cookie = `.ROBLOSECURITY=${rawCookie};`
 
-  const req = await axios.get(endpoints.HOME, {
+  const authReq = await fetch(endpoints.AUTHENTICATED, {
     headers: {
       Cookie: cookie,
     },
-    maxRedirects: 0,
-    validateStatus: (s) => [200, 302].indexOf(s) >= 0,
   })
 
-  if (req.status !== 200) {
+  if (authReq.status !== 200) {
     throw new Error("Unable to log in with provided cookie")
   }
 
-  const userId = extract(
-    Number,
-    req.data,
-    /<meta name=user-data data-userid=(\d+)/,
-    "Unable to determine current user id"
-  )
-  const csrfToken = extract(
-    String,
-    req.data,
-    /<meta name=csrf-token data-token=(.+?)>/,
-    "Unable to extract CSRF token"
-  )
+  const userId = (await authReq.json()).id
+
+  const csrfReq = await fetch(endpoints.LOGOUT, {
+    method: "POST",
+    headers: {
+      Cookie: cookie,
+    },
+  })
+
+  const csrfToken = csrfReq.headers.get("x-csrf-token")
+
+  if (!csrfToken) {
+    throw new Error("Unable to determine CSRF token")
+  }
 
   return {
     headers: {

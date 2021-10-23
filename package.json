@@ -4,7 +4,7 @@
   "description": "Transfers Roblox animations from one owner to another",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsc -w"
   },
   "bin": {
     "roblox-animation-transfer": "dist/index.js"

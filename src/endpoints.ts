@@ -1,5 +1,6 @@
 export const LIST = "https://www.roblox.com/build/assets?assetTypeId=24"
-export const HOME = "https://www.roblox.com/home"
+export const LOGOUT = "https://auth.roblox.com/v2/logout"
+export const AUTHENTICATED = "https://users.roblox.com/v1/users/authenticated"
 
 export const asset = (id: number) =>
   `https://assetdelivery.roblox.com/v1/asset/?id=${id}`

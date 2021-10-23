@@ -29,7 +29,7 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
     return
   }
 
-  const result = await registryList(REGISTRY_KEY)
+  const result = await registryList(REGISTRY_KEY).catch(() => {})
 
   if (!result || !result[REGISTRY_KEY] || !result[REGISTRY_KEY].values) {
     return
