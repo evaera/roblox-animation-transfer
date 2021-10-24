@@ -26,7 +26,6 @@
   "homepage": "https://github.com/evaera/roblox-animation-transfer#readme",
   "devDependencies": {
     "@types/better-queue": "^3.8.0",
-    "@types/cheerio": "^0.22.10",
     "@types/node": "^10.17.28",
     "@types/node-fetch": "^2.1.4",
     "@types/split2": "^2.1.6",
