@@ -36,7 +36,6 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "better-queue": "^3.8.10",
     "chalk": "^2.4.2",
     "node-fetch": "^2.3.0",
