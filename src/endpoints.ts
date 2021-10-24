@@ -4,15 +4,15 @@ export const AUTHENTICATED = "https://users.roblox.com/v1/users/authenticated"
 
 export const asset = (id: number) =>
   `https://assetdelivery.roblox.com/v1/asset/?id=${id}`
-export const userList = (userId: number, cursor?: string) =>
+export const userList = (userId: number, cursor = "") =>
   LIST +
   "&limit=100" +
-  (cursor != null ? `&cursor=${cursor}` : "")
-export const groupList = (groupId: number, cursor?: string) =>
+  (cursor !== "" ? `&cursor=${cursor}` : "")
+export const groupList = (groupId: number, cursor = "") =>
   LIST +
   `${groupId}` +
   "&limit = 100" +
-  (cursor != null ? `cursor=${cursor}` : "")
+  (cursor !== "" ? `cursor=${cursor}` : "")
 export const publish = (title: string, description: string, groupId?: number) =>
   "https://www.roblox.com/ide/publish/uploadnewanimation" +
   "?assetTypeName=Animation" +
