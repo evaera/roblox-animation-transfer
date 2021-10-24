@@ -1,27 +1,23 @@
 import { State } from './state'
 import * as endpoints from './endpoints'
 import axios from 'axios'
-import * as cheerio from 'cheerio'
-import { extract } from './util'
 import { Writable } from 'stream'
 
-const PER_PAGE = 50
-const LINK_SELECTOR = '.name-col > a'
-const HAS_NEXT_PAGE_SELECTOR = '.load-more-items'
+export async function getList (stream: Writable, state: State, endpoint: (cursor: string) => string) {
+  let nextCursor = ""
 
-export async function getList (stream: Writable, state: State, endpoint: (startRow: number) => string) {
-  for (let pageNum = 0; ; pageNum++) {
-    const page = await axios.get(endpoint(pageNum * PER_PAGE), {
+  while (nextCursor !== null) {
+    const animationData = await axios(endpoint(nextCursor), {
       headers: state.headers,
       validateStatus: s => s === 200
     })
 
-    const $ = cheerio.load(page.data)
-    $(LINK_SELECTOR).each(function () {
-      stream.write(`${extract(Number, $(this).attr('href'), /catalog\/(\d+)\//, 'Unable to extract animation ID')} ${$(this).text()}\n`)
+    animationData.data?.data.forEach((asset: { assetId: number, name: string }) => {
+      stream.write(`${asset.assetId} ${asset.name}`)
     })
 
-    if ($(HAS_NEXT_PAGE_SELECTOR).length === 0) break
+    if (!animationData.data.nextPageCursor) break
+    nextCursor = animationData.data.nextPageCursor
   }
 
   stream.end()
