@@ -1,23 +1,26 @@
 import { State } from './state'
 import * as endpoints from './endpoints'
-import axios from 'axios'
+import fetch from 'node-fetch'
 import { Writable } from 'stream'
 
 export async function getList (stream: Writable, state: State, endpoint: (cursor: string) => string) {
   let nextCursor = ""
 
-  while (nextCursor !== null) {
-    const animationData = await axios(endpoint(nextCursor), {
-      headers: state.headers,
-      validateStatus: s => s === 200
+  while (nextCursor != null) {
+    const animationReq = await fetch(endpoint(nextCursor), {
+      headers: state.headers
     })
 
-    animationData.data?.data.forEach((asset: { assetId: number, name: string }) => {
+    const { data: animationData, nextPageCursor } = await animationReq.json()
+
+    if (!animationData) throw new Error('Failed to fetch animations')
+
+    animationData?.forEach((asset: { assetId: number, name: string }) => {
       stream.write(`${asset.assetId} ${asset.name}\n`)
     })
 
-    if (!animationData.data.nextPageCursor) break
-    nextCursor = animationData.data.nextPageCursor
+    nextCursor = nextPageCursor
+    if (!nextPageCursor) break
   }
 
   stream.end()
