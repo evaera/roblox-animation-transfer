@@ -1,4 +1,4 @@
-export const LIST = "https://itemconfiguration.roblox.com/v1/creations/get-assets?assetType=24&limit=100"
+export const LIST = "https://itemconfiguration.roblox.com/v1/creations/get-assets?assetType=24&isArchived=false&limit=100"
 export const LOGOUT = "https://auth.roblox.com/v2/logout"
 export const AUTHENTICATED = "https://users.roblox.com/v1/users/authenticated"
 
