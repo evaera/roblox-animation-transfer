@@ -10,7 +10,7 @@ export const userList = (userId: number, cursor = "") =>
   (cursor !== "" ? `&cursor=${cursor}` : "")
 export const groupList = (groupId: number, cursor = "") =>
   LIST +
-  `${groupId}` +
+  `&${groupId}` +
   "&limit = 100" +
   (cursor !== "" ? `cursor=${cursor}` : "")
 export const publish = (title: string, description: string, groupId?: number) =>
