@@ -13,7 +13,7 @@ export async function getList (stream: Writable, state: State, endpoint: (cursor
     })
 
     animationData.data?.data.forEach((asset: { assetId: number, name: string }) => {
-      stream.write(`${asset.assetId} ${asset.name}`)
+      stream.write(`${asset.assetId} ${asset.name}\n`)
     })
 
     if (!animationData.data.nextPageCursor) break
