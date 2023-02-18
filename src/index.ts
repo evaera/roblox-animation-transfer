@@ -23,7 +23,7 @@ const assert = (condition: any, errorText: string) => {
 }
 
 async function getCookieFromRobloxStudio(): Promise<undefined | string> {
-  if (["darwin", "win32"].includes(process.platform)) {
+  if (!["darwin", "win32"].includes(process.platform)) {
     return
   }
 
