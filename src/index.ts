@@ -32,7 +32,7 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
     try {
       const homePath = require("os").homedir()
       const binaryCookieData = await readFile(
-        join(homePath, "~/Library/HTTPStorages/com.Roblox.RobloxStudio.binarycookies"),
+        join(homePath, "Library/HTTPStorages/com.Roblox.RobloxStudio.binarycookies"),
         { encoding: "utf-8" }
       )
 
