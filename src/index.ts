@@ -2,7 +2,8 @@
 
 import chalk from "chalk"
 import * as fs from "fs"
-import { findPassword } from "keytar";
+import { findPassword } from "keytar"
+import { join } from "path"
 import { promisify } from "util"
 import argv from "./argv"
 import { getGroupList, getUserList } from "./list"
@@ -29,8 +30,9 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
 
   if (process.platform === "darwin") {
     try {
+      const homePath = require("os").homedir()
       const binaryCookieData = await readFile(
-        `~/Library/HTTPStorages/com.Roblox.RobloxStudio.binarycookies`,
+        join(homePath, "~/Library/HTTPStorages/com.Roblox.RobloxStudio.binarycookies"),
         { encoding: "utf-8" }
       )
 
