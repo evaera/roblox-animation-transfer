@@ -37,14 +37,14 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
       )
 
       const matchGroups = binaryCookieData.match(
-        /\.ROBLOSECURITY\/RobloxStudioAuth(_\|WARNING:-DO-NOT-SHARE-THIS\.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items\.\|_[A-F\d]+)/
+        /_\|WARNING:-DO-NOT-SHARE-THIS\.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items\.\|_[A-F\d]+/
       )
 
-      if (!matchGroups || matchGroups.length < 2) {
+      if (!matchGroups || !matchGroups.length) {
         return
       }
 
-      return matchGroups[1]
+      return matchGroups[0]
     } catch {
       return
     }
