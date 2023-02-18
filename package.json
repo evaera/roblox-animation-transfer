@@ -40,6 +40,7 @@
     "better-queue": "^3.8.10",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.2",
+    "keytar": "^7.9.0",
     "node-fetch": "^2.3.0",
     "regedit": "^3.0.3",
     "split2": "^3.1.0",
