@@ -2,16 +2,11 @@
 
 import chalk from "chalk"
 import * as fs from "fs"
-import { list as registryListCallback } from "regedit"
-import { promisify } from "util"
+import { findPassword } from "keytar";
 import argv from "./argv"
 import { getGroupList, getUserList } from "./list"
 import getState from "./state"
 import transfer from "./transfer"
-
-const REGISTRY_KEY = "HKCU\\Software\\Roblox\\RobloxStudioBrowser\\roblox.com"
-
-const registryList = promisify(registryListCallback)
 
 const fatal = (errorText: string) => {
   console.error(chalk.bold.red(errorText))
@@ -29,28 +24,13 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
     return
   }
 
-  const result = await registryList(REGISTRY_KEY).catch(() => {})
+  const cookie = await findPassword("https://www.roblox.com:RobloxStudioAuth.ROBLOSECURITY")
 
-  if (!result || !result[REGISTRY_KEY] || !result[REGISTRY_KEY].values) {
+  if (!cookie) {
     return
   }
 
-  const cookie: { value: string } | undefined =
-    result[REGISTRY_KEY].values[".ROBLOSECURITY"]
-
-  if (!cookie || !cookie.value) return
-
-  const cookieFields = cookie.value.split(",")
-
-  for (const field of cookieFields) {
-    const [key, wrappedValue] = field.split("::")
-
-    if (key === "COOK") {
-      const cookieValue = wrappedValue.substring(1, wrappedValue.length - 1) // Remove beginning and trailing < >
-
-      return cookieValue
-    }
-  }
+  return cookie
 }
 
 async function main() {
