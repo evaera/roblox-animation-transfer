@@ -7,7 +7,7 @@ export async function pullAnimation(id: number): Promise<Buffer> {
     await fetch(endpoints.asset(id)).catch(() => {
       throw new Error(`Cannot pull animation ${id}`)
     })
-  ).blob()
+  ).buffer()
 }
 
 export async function publishAnimation(
