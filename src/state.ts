@@ -7,6 +7,7 @@ export interface State {
     "X-CSRF-TOKEN": string
   }
   userId: number
+  failedUploads: Set<number>
 }
 
 export default async function getState(rawCookie: string): Promise<State> {
@@ -43,5 +44,6 @@ export default async function getState(rawCookie: string): Promise<State> {
       "X-CSRF-TOKEN": csrfToken,
     },
     userId,
+    failedUploads: new Set(),
   }
 }
