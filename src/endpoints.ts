@@ -1,13 +1,16 @@
-export const LIST = "https://www.roblox.com/build/assets?assetTypeId=24"
+export const LIST = "https://itemconfiguration.roblox.com/v1/creations/get-assets?assetType=24&isArchived=false&limit=100"
 export const LOGOUT = "https://auth.roblox.com/v2/logout"
 export const AUTHENTICATED = "https://users.roblox.com/v1/users/authenticated"
 
 export const asset = (id: number) =>
   `https://assetdelivery.roblox.com/v1/asset/?id=${id}`
-export const userList = (userId: number, startRow = 0) =>
-  `${LIST}&userId=${userId}&startRow=${startRow}`
-export const groupList = (groupId: number, startRow = 0) =>
-  `${LIST}&groupId=${groupId}&startRow=${startRow}`
+export const userList = (userId: number, cursor = "") =>
+  LIST +
+  (cursor !== "" ? `&cursor=${cursor}` : "")
+export const groupList = (groupId: number, cursor = "") =>
+  LIST +
+  `&groupId=${groupId}` +
+  (cursor !== "" ? `cursor=${cursor}` : "")
 export const publish = (title: string, description: string, groupId?: number) =>
   "https://www.roblox.com/ide/publish/uploadnewanimation" +
   "?assetTypeName=Animation" +
