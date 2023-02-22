@@ -2,16 +2,15 @@
 
 import chalk from "chalk"
 import * as fs from "fs"
-import { list as registryListCallback } from "regedit"
+import { findPassword } from "keytar"
+import { join } from "path"
 import { promisify } from "util"
 import argv from "./argv"
 import { getGroupList, getUserList } from "./list"
 import getState from "./state"
 import transfer from "./transfer"
 
-const REGISTRY_KEY = "HKCU\\Software\\Roblox\\RobloxStudioBrowser\\roblox.com"
-
-const registryList = promisify(registryListCallback)
+const readFile = promisify(fs.readFile)
 
 const fatal = (errorText: string) => {
   console.error(chalk.bold.red(errorText))
@@ -25,32 +24,39 @@ const assert = (condition: any, errorText: string) => {
 }
 
 async function getCookieFromRobloxStudio(): Promise<undefined | string> {
-  if (process.platform !== "win32") {
+  if (!["darwin", "win32"].includes(process.platform)) {
     return
   }
 
-  const result = await registryList(REGISTRY_KEY).catch(() => {})
+  if (process.platform === "darwin") {
+    try {
+      const homePath = require("os").homedir()
+      const binaryCookieData = await readFile(
+        join(homePath, "Library/HTTPStorages/com.Roblox.RobloxStudio.binarycookies"),
+        { encoding: "utf-8" }
+      )
 
-  if (!result || !result[REGISTRY_KEY] || !result[REGISTRY_KEY].values) {
-    return
-  }
+      const matchGroups = binaryCookieData.match(
+        /_\|WARNING:-DO-NOT-SHARE-THIS\.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items\.\|_[A-F\d]+/
+      )
 
-  const cookie: { value: string } | undefined =
-    result[REGISTRY_KEY].values[".ROBLOSECURITY"]
+      if (!matchGroups || !matchGroups.length) {
+        return
+      }
 
-  if (!cookie || !cookie.value) return
-
-  const cookieFields = cookie.value.split(",")
-
-  for (const field of cookieFields) {
-    const [key, wrappedValue] = field.split("::")
-
-    if (key === "COOK") {
-      const cookieValue = wrappedValue.substring(1, wrappedValue.length - 1) // Remove beginning and trailing < >
-
-      return cookieValue
+      return matchGroups[0]
+    } catch {
+      return
     }
   }
+
+  const cookie = await findPassword("https://www.roblox.com:RobloxStudioAuth.ROBLOSECURITY")
+
+  if (!cookie) {
+    return
+  }
+
+  return cookie
 }
 
 async function main() {
