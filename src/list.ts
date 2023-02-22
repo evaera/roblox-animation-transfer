@@ -1,27 +1,26 @@
 import { State } from './state'
 import * as endpoints from './endpoints'
-import axios from 'axios'
-import * as cheerio from 'cheerio'
-import { extract } from './util'
+import fetch from 'node-fetch'
 import { Writable } from 'stream'
 
-const PER_PAGE = 50
-const LINK_SELECTOR = '.name-col > a'
-const HAS_NEXT_PAGE_SELECTOR = '.load-more-items'
+export async function getList (stream: Writable, state: State, endpoint: (cursor: string) => string) {
+  let nextCursor = ""
 
-export async function getList (stream: Writable, state: State, endpoint: (startRow: number) => string) {
-  for (let pageNum = 0; ; pageNum++) {
-    const page = await axios.get(endpoint(pageNum * PER_PAGE), {
-      headers: state.headers,
-      validateStatus: s => s === 200
+  while (nextCursor != null) {
+    const animationReq = await fetch(endpoint(nextCursor), {
+      headers: state.headers
     })
 
-    const $ = cheerio.load(page.data)
-    $(LINK_SELECTOR).each(function () {
-      stream.write(`${extract(Number, $(this).attr('href'), /catalog\/(\d+)\//, 'Unable to extract animation ID')} ${$(this).text()}\n`)
+    const { data: animationData, nextPageCursor } = await animationReq.json()
+
+    if (!animationData) throw new Error('Failed to fetch animations')
+
+    animationData?.forEach((asset: { assetId: number, name: string }) => {
+      stream.write(`${asset.assetId} ${asset.name}\n`)
     })
 
-    if ($(HAS_NEXT_PAGE_SELECTOR).length === 0) break
+    nextCursor = nextPageCursor
+    if (!nextPageCursor) break
   }
 
   stream.end()
