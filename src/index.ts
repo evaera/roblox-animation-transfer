@@ -28,6 +28,10 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
     return
   }
 
+  const cookieMatcher = new RegExp(
+    /_\|WARNING:-DO-NOT-SHARE-THIS\.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items\.\|_[A-F\d]+/
+  )
+
   if (process.platform === "darwin") {
     try {
       const homePath = require("os").homedir()
@@ -36,9 +40,7 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
         { encoding: "utf-8" }
       )
 
-      const matchGroups = binaryCookieData.match(
-        /_\|WARNING:-DO-NOT-SHARE-THIS\.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items\.\|_[A-F\d]+/
-      )
+      const matchGroups = binaryCookieData.match(cookieMatcher)
 
       if (!matchGroups || !matchGroups.length) {
         return
@@ -52,7 +54,7 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
 
   const cookie = await findPassword("https://www.roblox.com:RobloxStudioAuth.ROBLOSECURITY")
 
-  if (!cookie) {
+  if (!cookie || !cookie.match(cookieMatcher)) {
     return
   }
 
