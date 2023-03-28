@@ -28,9 +28,7 @@ async function getCookieFromRobloxStudio(): Promise<undefined | string> {
     return
   }
 
-  const cookieMatcher = new RegExp(
-    /_\|WARNING:-DO-NOT-SHARE-THIS\.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items\.\|_[A-F\d]+/
-  )
+  const cookieMatcher = /_\|WARNING:-DO-NOT-SHARE-THIS\.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items\.\|_[A-F\d]+/
 
   if (process.platform === "darwin") {
     try {
